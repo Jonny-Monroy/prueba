@@ -6,18 +6,15 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+// Cargar GeoJSON en las capas desde archivos locales
+    var c1 = L.geoJson(cp)
+    var c2 = L.geoJson(pobrezacund)
+    var c3 = L.geoJson(discapacidadcund)
 
-    
-//popup
-function popup(feature,layer){
-    if(feature.properties && feature.properties.f2){
-        layer.bindPopup("<strong>f2: </strong>" + feature.properties.f2 + "<br/>" + "<strong>MPM: </strong>" + feature.properties.MPM + "<br/>" + "<strong>Cognitotal: </strong>" + feature.properties.Cognitotal);
-    }
-}
-    
-// Agregar  GeoJson
-L.geoJson(cp).addTo(map);
+    var capas = {
+        "Pobreza y cognitiva": c1,
+        "Pobreza Cundinamarca": c2,
+        "Discapacidad Cundinamarca": c3
+    };
 
-var cognitivopobreJS = L.geoJson(cp,{
-    onEachFeature: popup
-}).addTo(map);
+    layerControl = L.control.layers(capas).addTo(map);
